@@ -1,0 +1,386 @@
+/* ==========================================================================
+   getlanded® — design tokens
+   --------------------------------------------------------------------------
+   This file is the single reskin surface. Every colour, size, tracking value,
+   rule weight and easing curve in the product resolves to a variable declared
+   here. tailwind.config.ts reads these same variables, so a token edited here
+   propagates to both the CSS layer and every Tailwind utility.
+
+   Authored from getlanded_design_system.pdf v1.0.
+   ========================================================================== */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ---------------------------------------------------------------- 02
+       COLOUR — four neutrals and exactly one accent.
+       Signal is capped at under 5% of any viewport. It appears as a fill
+       with ink text on top, or as a live label on an ink surface. It is
+       never set as text on paper below 24px.
+    ---------------------------------------------------------------- */
+    --gl-ink: #0a0a0a; /* all type */
+    --gl-paper: #f2f2f0; /* the page */
+    --gl-card: #ffffff; /* a level above the paper */
+    --gl-paper-dim: #e7e7e4; /* wells, insets */
+    --gl-signal: #ff4a17; /* the one loud thing */
+
+    /* Opacity ramps — ink on paper */
+    --gl-ink-80: rgba(10, 10, 10, 0.8); /* body */
+    --gl-ink-60: rgba(10, 10, 10, 0.6); /* secondary */
+    --gl-ink-40: rgba(10, 10, 10, 0.4); /* meta */
+    --gl-ink-16: rgba(10, 10, 10, 0.16); /* hairline */
+    --gl-ink-08: rgba(10, 10, 10, 0.08); /* grid line */
+
+    /* Opacity ramps — chalk on ink */
+    --gl-chalk-70: rgba(242, 242, 240, 0.7); /* body */
+    --gl-chalk-45: rgba(242, 242, 240, 0.45); /* meta */
+    --gl-chalk-20: rgba(242, 242, 240, 0.2); /* hairline */
+    --gl-chalk-10: rgba(242, 242, 240, 0.1); /* grid line */
+
+    /* ---------------------------------------------------------------- 01
+       TYPE — one grotesk, one mono, nothing else.
+       Five sizes carry the whole product. Display collapses across the
+       breakpoint inside its own clamp() rather than spawning a sixth step.
+       Swap --gl-font-grotesk to drop in licensed Helvetica Now; nothing
+       else in the system moves.
+    ---------------------------------------------------------------- */
+    --gl-font-grotesk: var(--font-archivo), "Helvetica Neue", Helvetica, Arial,
+      sans-serif;
+    --gl-font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular",
+      Menlo, monospace;
+
+    /* 1 — DISPLAY. Hero and section openers. Broken by hand, never wrapped.
+       The floor is set so the longest hand-broken hero line still clears the
+       content box at 375px — a wrapped display line is a bug, so the floor
+       moves before the line break does. */
+    --gl-size-display: clamp(2.4375rem, 12.2vw, 7.5rem); /* 39 → 120 */
+    --gl-leading-display: 0.86;
+    --gl-tracking-display: -0.04em;
+
+    /* 2 — HEADLINE. Statement bands, step titles, CTA. */
+    --gl-size-headline: clamp(2rem, 5.4vw, 2.75rem); /* 32 → 44 */
+    --gl-leading-headline: 0.96;
+    --gl-tracking-headline: -0.025em;
+
+    /* 3 — LEAD. Subcopy under a display line. */
+    --gl-size-lead: clamp(1.125rem, 2vw, 1.25rem); /* 18 → 20 */
+    --gl-leading-lead: 1.4;
+    --gl-tracking-lead: -0.012em;
+
+    /* 4 — BODY. Prose, card copy, buttons. */
+    --gl-size-body: 1rem; /* 16 */
+    --gl-leading-body: 1.55;
+    --gl-tracking-body: -0.004em;
+
+    /* 5 — META. Mono margin labels. Always uppercase. */
+    --gl-size-meta: 0.8125rem; /* 13 */
+    --gl-leading-meta: 1.3;
+    --gl-tracking-meta: 0.11em;
+
+    --gl-weight-display: 700;
+    --gl-weight-headline: 600;
+    --gl-weight-body: 400;
+    --gl-weight-meta: 500;
+
+    /* ---------------------------------------------------------------- 03
+       GRID — 12 columns. Lines are a frame around emptiness; when the
+       grid fills with content, they turn off.
+    ---------------------------------------------------------------- */
+    --gl-columns: 12;
+    --gl-gutter: 16px;
+    --gl-margin: 20px;
+    --gl-max-width: 1440px;
+    --gl-hairline: 1px;
+
+    /* ---------------------------------------------------------------- 04
+       GRAIN — film stock, not a filter. Fixed tile; never scales with
+       the element it sits on.
+    ---------------------------------------------------------------- */
+    --gl-grain-tile: 160px;
+    --gl-grain-tile-photo: 220px;
+    --gl-grain-paper: 0.05;
+    --gl-grain-ink: 0.07;
+    --gl-grain-photo: 0.2;
+
+    /* ---------------------------------------------------------------- 08
+       MOTION — type reveals, images scale, nothing bounces.
+    ---------------------------------------------------------------- */
+    --gl-reveal-distance: 16px;
+    --gl-duration-reveal: 620ms;
+    --gl-duration-hover: 140ms;
+    --gl-stagger: 60ms;
+    --gl-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --gl-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+    /* Geometry. The system is square-cornered and shadowless. */
+    --gl-radius: 2px;
+    --gl-nav-height: 68px;
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --gl-gutter: 24px;
+      --gl-margin: 40px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --gl-margin: 80px;
+    }
+  }
+
+  * {
+    border-color: var(--gl-ink-16);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--gl-paper);
+    color: var(--gl-ink);
+    font-family: var(--gl-font-grotesk);
+    font-size: var(--gl-size-body);
+    line-height: var(--gl-leading-body);
+    letter-spacing: var(--gl-tracking-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Focus is visible and square, like everything else. */
+  :focus-visible {
+    outline: 2px solid var(--gl-ink);
+    outline-offset: 3px;
+  }
+
+  .gl-ink-surface :focus-visible {
+    outline-color: var(--gl-paper);
+  }
+
+  ::selection {
+    background: var(--gl-ink);
+    color: var(--gl-paper);
+  }
+
+  .gl-ink-surface ::selection {
+    background: var(--gl-paper);
+    color: var(--gl-ink);
+  }
+}
+
+@layer components {
+  /* ------------------------------------------------------------------ 03
+     Page shell. Max width, centred, with responsive margins.
+  ------------------------------------------------------------------ */
+  .gl-shell {
+    width: 100%;
+    max-width: var(--gl-max-width);
+    margin-inline: auto;
+    padding-inline: var(--gl-margin);
+  }
+
+  /* ------------------------------------------------------------------ 04
+     GRAIN. An ::after overlay on the surface, overlay blend, no pointer
+     events. Sits under the type — never over it — because the type layer
+     always carries a higher stacking context.
+  ------------------------------------------------------------------ */
+  .gl-grain {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .gl-grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image: url("/grain.svg");
+    background-size: var(--gl-grain-tile) var(--gl-grain-tile);
+    background-repeat: repeat;
+    mix-blend-mode: overlay;
+    opacity: var(--gl-grain-paper);
+  }
+
+  .gl-grain--ink::after {
+    opacity: var(--gl-grain-ink);
+  }
+
+  .gl-grain--photo::after {
+    background-size: var(--gl-grain-tile-photo) var(--gl-grain-tile-photo);
+    opacity: var(--gl-grain-photo);
+  }
+
+  /* Content inside a grained surface sits above the plate. */
+  .gl-grain > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ------------------------------------------------------------------ 02
+     Inverted surface. Flips the ramps so the same components read
+     correctly on ink without a second set of classes.
+  ------------------------------------------------------------------ */
+  .gl-ink-surface {
+    background-color: var(--gl-ink);
+    color: var(--gl-paper);
+  }
+
+  /* ------------------------------------------------------------------ 01
+     Type roles. Five sizes, no more.
+  ------------------------------------------------------------------ */
+  .gl-display {
+    font-size: var(--gl-size-display);
+    line-height: var(--gl-leading-display);
+    letter-spacing: var(--gl-tracking-display);
+    font-weight: var(--gl-weight-display);
+    /* A wrapped display line is a bug. Lines are broken by hand. */
+    text-wrap: balance;
+  }
+
+  .gl-headline {
+    font-size: var(--gl-size-headline);
+    line-height: var(--gl-leading-headline);
+    letter-spacing: var(--gl-tracking-headline);
+    font-weight: var(--gl-weight-headline);
+  }
+
+  .gl-lead {
+    font-size: var(--gl-size-lead);
+    line-height: var(--gl-leading-lead);
+    letter-spacing: var(--gl-tracking-lead);
+    font-weight: var(--gl-weight-body);
+  }
+
+  .gl-meta {
+    font-family: var(--gl-font-mono);
+    font-size: var(--gl-size-meta);
+    line-height: var(--gl-leading-meta);
+    letter-spacing: var(--gl-tracking-meta);
+    font-weight: var(--gl-weight-meta);
+    text-transform: uppercase;
+  }
+
+  /* ------------------------------------------------------------------ 06
+     Wordmark. The ® is glued to the last letter and never gets space
+     of its own.
+  ------------------------------------------------------------------ */
+  .gl-wordmark {
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    text-transform: lowercase;
+  }
+
+  .gl-wordmark sup {
+    font-size: 0.42em;
+    vertical-align: baseline;
+    /* Aligned to the cap line of the d, with no added letter-spacing. */
+    position: relative;
+    top: -0.72em;
+    letter-spacing: 0;
+  }
+
+  /* ------------------------------------------------------------------ 07
+     Buttons. Sentence case, 2px radius, colour shift only on press.
+  ------------------------------------------------------------------ */
+  .gl-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.5rem;
+    padding: 1.0625rem 1.375rem;
+    border: var(--gl-hairline) solid var(--gl-ink);
+    border-radius: var(--gl-radius);
+    background-color: var(--gl-ink);
+    color: var(--gl-paper);
+    font-size: var(--gl-size-body);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    text-decoration: none;
+    transition: background-color var(--gl-duration-hover) var(--gl-ease-in-out),
+      color var(--gl-duration-hover) var(--gl-ease-in-out),
+      border-color var(--gl-duration-hover) var(--gl-ease-in-out);
+  }
+
+  .gl-button:hover {
+    background-color: var(--gl-signal);
+    border-color: var(--gl-signal);
+    color: var(--gl-ink);
+  }
+
+  .gl-button--secondary {
+    background-color: transparent;
+    color: var(--gl-ink);
+    border-color: var(--gl-ink-16);
+  }
+
+  .gl-button--secondary:hover {
+    background-color: transparent;
+    border-color: var(--gl-ink);
+    color: var(--gl-ink);
+  }
+
+  /* ------------------------------------------------------------------ 02
+     Live badge. The accent budget spends here first.
+  ------------------------------------------------------------------ */
+  .gl-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.5rem;
+    background-color: var(--gl-signal);
+    color: var(--gl-ink);
+    border-radius: var(--gl-radius);
+  }
+
+  .gl-badge::before {
+    content: "";
+    width: 0.4375rem;
+    height: 0.4375rem;
+    border-radius: 50%;
+    background-color: var(--gl-ink);
+  }
+}
+
+@layer utilities {
+  /* ------------------------------------------------------------------ 08
+     Type reveal. translateY(16px) → 0 with a fade, 620ms, staggered
+     60ms per line, once on first view. Nothing bounces.
+  ------------------------------------------------------------------ */
+  .gl-reveal {
+    opacity: 0;
+    transform: translateY(var(--gl-reveal-distance));
+    transition: opacity var(--gl-duration-reveal) var(--gl-ease-out),
+      transform var(--gl-duration-reveal) var(--gl-ease-out);
+    transition-delay: var(--gl-reveal-delay, 0ms);
+  }
+
+  .gl-reveal[data-revealed="true"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gl-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
