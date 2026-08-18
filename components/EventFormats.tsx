@@ -2,89 +2,50 @@ import GridLines from "./GridLines";
 import Reveal from "./Reveal";
 
 /**
- * 04 — Event formats. Editorial photo grid, staggered ratios and offsets,
- * grid lines off (05: the photography carries this block, not the frame).
+ * 04 — This weekend. A uniform six-up grid, three across.
  *
- * Add, remove or reorder a format by editing this array alone. `span` and
- * `offset` are 12-column placements; `width`/`height` are the intrinsic
- * pixel dimensions of the file and are set on the img so the box is
- * reserved before the image decodes — no layout shift.
+ * The exported frames are COMPOSED CARDS: the WK label, the spots badge, the
+ * title, the hairline and the location/time are part of the photograph, not
+ * markup. So nothing is overlaid here — a second title in HTML would print
+ * the same words twice. Each frame's alt text carries everything the pixels
+ * say, because for a screen reader the pixels say nothing.
  *
- * TODO: replace /public/events/*.jpg with real event photography.
- * Every frame here is a written brief waiting for a real photograph.
- * Treatment on swap: grayscale(1) contrast(1.18) — applied in CSS below,
- * so the source files stay untouched colour originals.
+ * Every frame is 1284x1160, so the grid stays honest without cropping and
+ * the boxes are reserved before the images decode.
+ *
+ * TODO: as the lineup changes week to week, re-export the frames at
+ * 1284x1160 and update `alt` to match the new baked-in copy.
  */
-type Format = {
+type Frame = {
   slug: string;
-  name: string;
-  place: string;
-  /** Alt text describes the photograph, not the format label. */
+  /** Everything printed on the frame, in reading order. */
   alt: string;
-  width: number;
-  height: number;
-  span: string;
-  offset?: string;
 };
 
-const FORMATS: Format[] = [
+const FRAMES: Frame[] = [
   {
-    slug: "board-games",
-    name: "Cafe board games",
-    place: "Bandra West",
-    alt: "Hands mid-move over a board game, eight glasses crowding the table",
-    width: 1600,
-    height: 1100,
-    span: "md:col-span-7",
-  },
-  {
-    slug: "karaoke",
-    name: "Karaoke night",
-    place: "Khar",
-    alt: "Two people sharing one microphone, both singing slightly off key",
-    width: 1000,
-    height: 1300,
-    span: "md:col-span-4",
-    offset: "md:col-start-9 md:mt-24",
-  },
-  {
-    slug: "climbing",
-    name: "Rock climbing",
-    place: "Powai",
-    alt: "Chalk on a climbing hold, a forearm mid-reach, shoulder cut by the frame",
-    width: 1000,
-    height: 1300,
-    span: "md:col-span-4",
-    offset: "md:col-start-2",
-  },
-  {
-    slug: "jamming",
-    name: "Jam sessions",
-    place: "Versova",
-    alt: "Three guitarists around one amplifier in a rehearsal room",
-    width: 1600,
-    height: 1000,
-    span: "md:col-span-6",
-    offset: "md:col-start-7 md:mt-32",
+    slug: "bouldering",
+    alt: "Week 34, frame 1, three spots left. Bouldering, beginners welcome. Bandra West, Saturday 18:30. Climbers on a bouldering wall photographed from above.",
   },
   {
     slug: "mma",
-    name: "MMA sessions",
-    place: "Lower Parel",
-    alt: "Two people sparring in gloves on a gym mat, coach shouting off-frame",
-    width: 1200,
-    height: 1200,
-    span: "md:col-span-5",
+    alt: "Week 34, frame 2. MMA intro. Andheri East, Sunday 08:00. Gloves and wraps on a gym floor.",
   },
   {
-    slug: "trekking",
-    name: "Trekking",
-    place: "Matheran",
-    alt: "A line of people walking a ridge at dawn, nobody talking yet",
-    width: 1500,
-    height: 1000,
-    span: "md:col-span-6",
-    offset: "md:col-start-7 md:mt-16",
+    slug: "board-games",
+    alt: "Week 34, frame 3. Board games, no rules explained twice. Lower Parel, Friday 20:00. Cards and hands across a crowded table.",
+  },
+  {
+    slug: "open-mic",
+    alt: "Week 34, frame 4. Open mic and guitar circle. Versova, Saturday 19:00. A crowd under strung lights facing a small stage.",
+  },
+  {
+    slug: "karaoke",
+    alt: "Week 34, frame 5, two spots left. Karaoke. Colaba, Friday 21:30. A lyric screen glowing in a dark room.",
+  },
+  {
+    slug: "sunrise-trek",
+    alt: "Week 34, frame 6. Sunrise trek. Sanjay Gandhi National Park, Sunday 05:45. A line of walkers climbing a ridge at dawn.",
   },
 ];
 
@@ -95,52 +56,44 @@ export default function EventFormats() {
       aria-labelledby="events-heading"
       className="scroll-mt-nav pb-tight"
     >
-      {/* Opener band. The long lead-in is the emptiness the grid frames, so
-          the rules that separate this section are drawn as columns rather
-          than as a border on the section itself. */}
+      {/* Opener band. Grid lines only — the rules live on the frames. */}
       <div className="relative overflow-hidden pb-tight pt-loose">
         <GridLines tone="ink" crossAt="28%" />
         <div className="gl-shell relative z-[3]">
           <Reveal>
-            <p className="gl-meta text-ink-40">
-              Six formats / Four rooms a month
-            </p>
+            <div className="flex items-baseline justify-between gap-6">
+              <p className="gl-meta text-ink-40">Week 34 / This weekend</p>
+              <p className="gl-meta shrink-0 text-ink-40">Six rooms</p>
+            </div>
             <h2 id="events-heading" className="gl-headline mt-4">
-              {/* Broken at the sentence, not mid-clause. */}
-              <span className="block">Four rooms a month.</span>
+              <span className="block">Six rooms this weekend.</span>
               <span className="block">Pick the one you can survive.</span>
             </h2>
           </Reveal>
         </div>
       </div>
 
-      {/* Photo grid. Captions carry hairlines, so no grid lines here. */}
+      {/* The grid. Uniform three-up, one gutter, no offsets — the frames
+          carry the rhythm now, so the layout gets out of their way. */}
       <div className="gl-shell">
-        <ul className="grid gap-12 md:grid-cols-12 md:gap-x-gutter md:gap-y-24">
-          {FORMATS.map((format) => (
-            <li
-              key={format.slug}
-              className={`${format.span} ${format.offset ?? ""}`}
-            >
-              {/* 08 — the frame never moves; .gl-photo scales the image inside it. */}
-              <div className="gl-photo gl-grain gl-grain--photo bg-ink">
-                <img
-                  src={`/events/${format.slug}.jpg`}
-                  alt={format.alt}
-                  width={format.width}
-                  height={format.height}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-
-              <div className="mt-3 flex items-baseline justify-between gap-4 border-t border-ink-16 pt-3">
-                <p className="gl-meta">{format.name}</p>
-                <p className="gl-meta shrink-0 text-ink-40">{format.place}</p>
-              </div>
+        <ul className="grid grid-cols-1 gap-gutter sm:grid-cols-2 lg:grid-cols-3">
+          {FRAMES.map((frame) => (
+            <li key={frame.slug} className="gl-photo bg-ink">
+              <img
+                src={`/events/${frame.slug}.jpg`}
+                alt={frame.alt}
+                width={1284}
+                height={1160}
+                loading="lazy"
+                decoding="async"
+              />
             </li>
           ))}
         </ul>
+
+        <p className="gl-meta mt-6 border-t border-ink-16 pt-4 text-ink-40">
+          Six frames / Pairs of two / Hosted
+        </p>
       </div>
     </section>
   );

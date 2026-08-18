@@ -66,17 +66,22 @@
        trim, the way a poster does. Re-break a display line much longer than
        "Bombay is loud." and this wants re-deriving.
 
-       The 11rem ceiling holds the line once .gl-shell stops growing at
-       1440px; past that the content box is fixed, so the type must be too.
+       The 9rem ceiling is where growth stops. Below it the coefficient
+       governs and lines fill ~96% of the measure, so phones and tablets
+       keep the full poster scale. Above it the type holds while the box
+       keeps widening — at 176px a four-line display block ran taller than
+       a 1080p screen and pushed the CTA button under the fold. The ceiling
+       buys that back, and only costs fill on large screens where there is
+       room to spare.
 
-       This exceeds the PDF's D1 of 120px deliberately. 120px honours the
-       spec's number and breaks its intent, which is oversized type as the
-       primary design element. */
+       This still exceeds the PDF's D1 of 120px. 120px honours the spec's
+       number and breaks its intent, which is oversized type as the primary
+       design element. */
     --gl-size-display: clamp(
       2.4375rem,
       calc((100vw - 2 * var(--gl-margin)) * 0.137),
-      11rem
-    ); /* 39 → 176 */
+      9rem
+    ); /* 39 → 144 */
     --gl-leading-display: 0.86;
     --gl-tracking-display: -0.04em;
 
@@ -355,15 +360,16 @@
      the string: the ® sets at 0.42em, so "getlanded®" occupies 451px per
      100px of font-size rather than the 525px a full-size mark would. That
      difference is why 0.186 left the lockup short of the measure; 0.217
-     lands it at ~98%. The ceiling holds it once .gl-shell stops growing
-     at 1440px.
+     lands it at ~98% while the coefficient governs.
+
+     The ceiling keeps the hierarchy honest. Uncapped, the mark reached
+     278px against a 144px display size — decorative ornament set larger
+     than every headline on the page, which inverts what the page is
+     saying. 11rem keeps it the biggest thing in the footer without
+     outshouting the type it closes.
   ------------------------------------------------------------------ */
   .gl-wordmark-xl {
-    font-size: clamp(
-      3rem,
-      calc((100vw - 2 * var(--gl-margin)) * 0.217),
-      17.375rem
-    );
+    font-size: clamp(3rem, calc((100vw - 2 * var(--gl-margin)) * 0.217), 11rem);
     line-height: var(--gl-leading-display);
     display: block;
   }
@@ -452,8 +458,16 @@
     display: block;
     width: 100%;
     height: auto;
-    filter: grayscale(1) contrast(1.18);
+    /* No filter. The exported frames arrive graded to 05 already, and each
+       carries a Signal spots-badge baked into the pixels — grayscale(1)
+       desaturated that badge to grey and silently spent the accent. Apply
+       `filter: grayscale(1) contrast(1.18)` per-frame only if a colour
+       original is ever dropped in. */
     transition: transform var(--gl-duration-reveal) var(--gl-ease-out);
+  }
+
+  .gl-photo--raw img {
+    filter: grayscale(1) contrast(1.18);
   }
 
   .gl-photo:hover img {
