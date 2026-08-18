@@ -83,6 +83,10 @@ const config: Config = {
         nav: "var(--gl-nav-height)",
         crosshair: "var(--gl-crosshair-size)",
         hairline: "var(--gl-hairline)",
+        tight: "var(--gl-space-tight)",
+        base: "var(--gl-space-base)",
+        loose: "var(--gl-space-loose)",
+        vast: "var(--gl-space-vast)",
       },
       backdropBlur: {
         nav: "var(--gl-nav-blur)",

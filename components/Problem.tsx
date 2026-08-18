@@ -15,7 +15,7 @@ export default function Problem() {
   return (
     <section
       aria-labelledby="problem-heading"
-      className="border-y border-ink-16 py-24 md:py-40"
+      className="border-y border-ink-16 py-vast"
     >
       <div className="gl-shell">
         <Reveal>

@@ -1,3 +1,4 @@
+import GridLines from "./GridLines";
 import Reveal from "./Reveal";
 
 /**
@@ -37,10 +38,10 @@ const FORMATS: Format[] = [
     span: "md:col-span-7",
   },
   {
-    slug: "open-mic",
-    name: "Open mics",
+    slug: "karaoke",
+    name: "Karaoke night",
     place: "Khar",
-    alt: "A performer at a microphone, eyes shut, mid-line",
+    alt: "Two people sharing one microphone, both singing slightly off key",
     width: 1000,
     height: 1300,
     span: "md:col-span-4",
@@ -76,10 +77,10 @@ const FORMATS: Format[] = [
     span: "md:col-span-5",
   },
   {
-    slug: "gym",
-    name: "Gym sessions",
-    place: "Bandra West",
-    alt: "A loaded barbell and chalk dust in early morning light from a high window",
+    slug: "trekking",
+    name: "Trekking",
+    place: "Matheran",
+    alt: "A line of people walking a ridge at dawn, nobody talking yet",
     width: 1500,
     height: 1000,
     span: "md:col-span-6",
@@ -92,17 +93,26 @@ export default function EventFormats() {
     <section
       id="events"
       aria-labelledby="events-heading"
-      className="scroll-mt-nav border-t border-ink-16 py-24 md:py-40"
+      className="scroll-mt-nav pb-tight"
     >
-      <div className="gl-shell">
-        <Reveal>
-          <p className="gl-meta text-ink-40">Six formats / One room each</p>
-          <h2 id="events-heading" className="gl-headline mt-4 max-w-[26ch]">
-            Four rooms a month. Pick the one you can survive.
-          </h2>
-        </Reveal>
+      {/* Opener band. The long lead-in is the emptiness the grid frames, so
+          the rules that separate this section are drawn as columns rather
+          than as a border on the section itself. */}
+      <div className="relative overflow-hidden pb-tight pt-loose">
+        <GridLines tone="ink" crossAt="28%" />
+        <div className="gl-shell relative z-[3]">
+          <Reveal>
+            <p className="gl-meta text-ink-40">Six formats / One room each</p>
+            <h2 id="events-heading" className="gl-headline mt-4 max-w-[26ch]">
+              Four rooms a month. Pick the one you can survive.
+            </h2>
+          </Reveal>
+        </div>
+      </div>
 
-        <ul className="mt-16 grid gap-12 md:mt-24 md:grid-cols-12 md:gap-x-gutter md:gap-y-24">
+      {/* Photo grid. Captions carry hairlines, so no grid lines here. */}
+      <div className="gl-shell">
+        <ul className="grid gap-12 md:grid-cols-12 md:gap-x-gutter md:gap-y-24">
           {FORMATS.map((format) => (
             <li
               key={format.slug}

@@ -1,3 +1,4 @@
+import GridLines from "./GridLines";
 import Reveal from "./Reveal";
 
 /**
@@ -35,20 +36,28 @@ export default function Steps() {
     <section
       id="how-it-works"
       aria-labelledby="how-it-works-heading"
-      className="scroll-mt-nav py-24 md:py-40"
+      className="scroll-mt-nav pb-tight"
     >
-      <div className="gl-shell">
-        <Reveal>
-          <p className="gl-meta text-ink-40">How matching works</p>
-          <h2
-            id="how-it-works-heading"
-            className="gl-headline mt-4 max-w-[26ch] text-balance"
-          >
-            No small talk with strangers. You get one.
-          </h2>
-        </Reveal>
+      {/* Opener band. Grid lines only — 03 forbids grid and hairline in the
+          same block, so the rules live below and the frame lives here. */}
+      <div className="relative overflow-hidden pb-tight pt-tight">
+        <GridLines tone="ink" crossAt="14%" />
+        <div className="gl-shell relative z-[3]">
+          <Reveal>
+            <p className="gl-meta text-ink-40">How matching works</p>
+            <h2
+              id="how-it-works-heading"
+              className="gl-headline mt-4 max-w-[26ch] text-balance"
+            >
+              No small talk with strangers. You get one.
+            </h2>
+          </Reveal>
+        </div>
+      </div>
 
-        <ol className="mt-16 md:mt-24">
+      {/* Step list. Hairlines only — no grid lines cross this block. */}
+      <div className="gl-shell">
+        <ol>
           {STEPS.map((step) => (
             <li
               key={step.n}

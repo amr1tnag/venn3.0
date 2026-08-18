@@ -16,13 +16,13 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="gl-grain relative flex min-h-[calc(100svh-var(--gl-nav-height))] flex-col justify-end overflow-hidden pb-14 pt-20 md:pb-20"
+      className="gl-grain relative flex min-h-[calc(100svh-var(--gl-nav-height))] flex-col justify-end overflow-hidden pb-tight pt-10"
     >
-      <GridLines tone="ink" />
+      <GridLines tone="ink" crossAt="96%" />
 
       <div className="gl-shell relative z-[3] w-full">
         {/* Mono meta, in the margin. 03 — the eyebrow rides the top rule. */}
-        <div className="mb-12 flex items-baseline justify-between gap-6 border-t border-ink-16 pt-4 md:mb-20">
+        <div className="mb-8 flex items-baseline justify-between gap-6 border-t border-ink-16 pt-4 md:mb-10">
           <p className="gl-meta text-ink-40">
             Mumbai <span className="hidden sm:inline">/ Weekends </span>/ Pairs
             first
@@ -43,7 +43,7 @@ export default function Hero() {
           </Reveal>
         </h1>
 
-        <div className="mt-10 grid gap-10 md:mt-16 md:grid-cols-12 md:gap-gutter">
+        <div className="mt-10 grid gap-10 md:mt-12 md:grid-cols-12 md:gap-gutter">
           <div className="md:col-span-5">
             <p className="gl-lead max-w-[34ch] text-ink-80">
               We pair you with one other person who also just landed, then put{" "}

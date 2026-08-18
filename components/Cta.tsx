@@ -17,9 +17,9 @@ export default function Cta() {
     <section
       id="the-group"
       aria-labelledby="cta-heading"
-      className="gl-ink-surface gl-grain gl-grain--ink scroll-mt-nav relative flex min-h-svh flex-col justify-center overflow-hidden py-24 md:py-40"
+      className="gl-ink-surface gl-grain gl-grain--ink scroll-mt-nav relative flex min-h-svh flex-col justify-center overflow-hidden py-base"
     >
-      <GridLines tone="chalk" />
+      <GridLines tone="chalk" crossAt="12%" />
 
       <div className="gl-shell relative z-[3] w-full">
         <Reveal>
