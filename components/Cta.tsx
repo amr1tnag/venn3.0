@@ -24,8 +24,11 @@ export default function Cta() {
       <div className="gl-shell relative z-[3] w-full">
         <Reveal>
           <p className="gl-meta text-chalk-45">The group</p>
-          <h2 id="cta-heading" className="gl-display mt-6 max-w-[16ch]">
-            The group is on WhatsApp.
+          <h2 id="cta-heading" className="gl-display mt-6">
+            {/* Hand-broken so the long line sets the measure and the short
+                one rags under it. */}
+            <span className="block">The group is on</span>
+            <span className="block">WhatsApp.</span>
           </h2>
         </Reveal>
 

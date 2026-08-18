@@ -53,10 +53,30 @@
       var(--font-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
 
     /* 1 — DISPLAY. Hero and section openers. Broken by hand, never wrapped.
-       The floor is set so the longest hand-broken hero line still clears the
-       content box at 375px — a wrapped display line is a bug, so the floor
-       moves before the line break does. */
-    --gl-size-display: clamp(2.4375rem, 12.2vw, 7.5rem); /* 39 → 120 */
+
+       Sized against the CONTENT BOX, not the viewport. A plain vw term drifts
+       away from the measure every time --gl-margin steps up, which is what
+       left display lines filling barely half their column on wide screens.
+       Subtracting the margins keeps the fill constant across every
+       breakpoint instead.
+
+       The 0.137 coefficient is the type doing its job: the longest
+       hand-broken display line renders at 697px per 100px of font-size, so
+       0.96 / 6.97 lands that line at ~96% of the measure — the type hits the
+       trim, the way a poster does. Re-break a display line much longer than
+       "Bombay is loud." and this wants re-deriving.
+
+       The 11rem ceiling holds the line once .gl-shell stops growing at
+       1440px; past that the content box is fixed, so the type must be too.
+
+       This exceeds the PDF's D1 of 120px deliberately. 120px honours the
+       spec's number and breaks its intent, which is oversized type as the
+       primary design element. */
+    --gl-size-display: clamp(
+      2.4375rem,
+      calc((100vw - 2 * var(--gl-margin)) * 0.137),
+      11rem
+    ); /* 39 → 176 */
     --gl-leading-display: 0.86;
     --gl-tracking-display: -0.04em;
 

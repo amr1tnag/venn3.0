@@ -30,7 +30,7 @@ export default function Hero() {
           <p className="gl-meta shrink-0 text-ink-40">©2026</p>
         </div>
 
-        <h1 className="gl-display max-w-[15ch]">
+        <h1 className="gl-display">
           {/* Hand-broken lines. Each reveals on its own beat. */}
           <Reveal as="span" index={0} className="block">
             Bombay is loud.
