@@ -6,8 +6,8 @@
  * Sat 22 Aug. Never "a few".
  */
 export const site = {
-  /* TODO: swap for the live WhatsApp invite before launch. */
-  whatsappUrl: "https://chat.whatsapp.com/",
+  /** The live group invite. Every CTA on the page points here. */
+  whatsappUrl: "https://chat.whatsapp.com/BLWsYr3p8Dt5rNo2M1Yadw",
   instagramUrl: "https://instagram.com/getlanded",
   instagramHandle: "@getlanded",
 

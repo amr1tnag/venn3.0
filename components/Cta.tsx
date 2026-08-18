@@ -2,7 +2,6 @@ import GridLines from "./GridLines";
 import Reveal from "./Reveal";
 import { site } from "@/lib/site";
 
-/* TODO: swap for the live WhatsApp invite before launch. */
 const WHATSAPP_URL = site.whatsappUrl;
 
 /**
