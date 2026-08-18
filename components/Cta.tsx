@@ -19,7 +19,7 @@ export default function Cta() {
       aria-labelledby="cta-heading"
       className="gl-ink-surface gl-grain gl-grain--ink scroll-mt-nav relative flex min-h-svh flex-col justify-center overflow-hidden py-base"
     >
-      <GridLines tone="chalk" crossAt="12%" />
+      <GridLines tone="chalk" crossAt="92%" />
 
       <div className="gl-shell relative z-[3] w-full">
         <Reveal>
@@ -29,6 +29,8 @@ export default function Cta() {
                 one rags under it. */}
             <span className="block">The group is on</span>
             <span className="block">WhatsApp.</span>
+            <span className="block">Mostly plans,</span>
+            <span className="block">some noise.</span>
           </h2>
         </Reveal>
 

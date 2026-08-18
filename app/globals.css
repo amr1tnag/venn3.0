@@ -347,6 +347,27 @@
     letter-spacing: 0;
   }
 
+  /* ------------------------------------------------------------------ 06
+     Footer lockup. The one oversized decorative wordmark per page.
+
+     Sized against the content box on the same principle as the display
+     role. The coefficient is measured from the RENDERED lockup, not from
+     the string: the ® sets at 0.42em, so "getlanded®" occupies 451px per
+     100px of font-size rather than the 525px a full-size mark would. That
+     difference is why 0.186 left the lockup short of the measure; 0.217
+     lands it at ~98%. The ceiling holds it once .gl-shell stops growing
+     at 1440px.
+  ------------------------------------------------------------------ */
+  .gl-wordmark-xl {
+    font-size: clamp(
+      3rem,
+      calc((100vw - 2 * var(--gl-margin)) * 0.217),
+      17.375rem
+    );
+    line-height: var(--gl-leading-display);
+    display: block;
+  }
+
   /* ------------------------------------------------------------------ 07
      Buttons. Sentence case, 2px radius, colour shift only on press.
   ------------------------------------------------------------------ */

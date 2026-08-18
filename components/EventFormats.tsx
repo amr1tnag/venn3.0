@@ -102,9 +102,13 @@ export default function EventFormats() {
         <GridLines tone="ink" crossAt="28%" />
         <div className="gl-shell relative z-[3]">
           <Reveal>
-            <p className="gl-meta text-ink-40">Six formats / One room each</p>
-            <h2 id="events-heading" className="gl-headline mt-4 max-w-[26ch]">
-              Four rooms a month. Pick the one you can survive.
+            <p className="gl-meta text-ink-40">
+              Six formats / Four rooms a month
+            </p>
+            <h2 id="events-heading" className="gl-headline mt-4">
+              {/* Broken at the sentence, not mid-clause. */}
+              <span className="block">Four rooms a month.</span>
+              <span className="block">Pick the one you can survive.</span>
             </h2>
           </Reveal>
         </div>

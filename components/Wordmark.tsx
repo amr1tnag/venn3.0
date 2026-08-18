@@ -6,9 +6,15 @@
  * The ® appears on the nav lockup, the footer lockup, and once as an oversized
  * decorative mark per page. Never twice in the same view.
  */
-export default function Wordmark({ className }: { className?: string }) {
+export default function Wordmark({
+  className,
+  ...rest
+}: { className?: string } & React.HTMLAttributes<HTMLSpanElement>) {
   return (
-    <span className={className ? `gl-wordmark ${className}` : "gl-wordmark"}>
+    <span
+      {...rest}
+      className={className ? `gl-wordmark ${className}` : "gl-wordmark"}
+    >
       getlanded<sup aria-hidden="true">®</sup>
     </span>
   );
