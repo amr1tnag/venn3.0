@@ -47,10 +47,10 @@
        Swap --gl-font-grotesk to drop in licensed Helvetica Now; nothing
        else in the system moves.
     ---------------------------------------------------------------- */
-    --gl-font-grotesk: var(--font-archivo), "Helvetica Neue", Helvetica, Arial,
-      sans-serif;
-    --gl-font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular",
-      Menlo, monospace;
+    --gl-font-grotesk:
+      var(--font-archivo), "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --gl-font-mono:
+      var(--font-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
 
     /* 1 — DISPLAY. Hero and section openers. Broken by hand, never wrapped.
        The floor is set so the longest hand-broken hero line still clears the
@@ -118,6 +118,11 @@
     /* Geometry. The system is square-cornered and shadowless. */
     --gl-radius: 2px;
     --gl-nav-height: 68px;
+    /* The nav is the one place blur is used (07). */
+    --gl-nav-blur: 6px;
+    /* Arm length of the + that marks a column intersection (03). */
+    --gl-crosshair-size: 9px;
+    --gl-nav-opacity: 85%;
   }
 
   @media (min-width: 768px) {
@@ -193,9 +198,15 @@
      the inverted CTA below.
   ------------------------------------------------------------------ */
   .gl-nav {
-    background-color: color-mix(in srgb, var(--gl-paper) 85%, transparent);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    background-color: color-mix(
+      in srgb,
+      var(--gl-paper) var(--gl-nav-opacity),
+      transparent
+    );
+    /* Prefixed first: autoprefixer drops the standard property when it is
+       declared ahead of the -webkit- one, which silently killed the blur. */
+    -webkit-backdrop-filter: blur(var(--gl-nav-blur));
+    backdrop-filter: blur(var(--gl-nav-blur));
   }
 
   /* ------------------------------------------------------------------ 04
@@ -317,7 +328,8 @@
     letter-spacing: -0.01em;
     line-height: 1;
     text-decoration: none;
-    transition: background-color var(--gl-duration-hover) var(--gl-ease-in-out),
+    transition:
+      background-color var(--gl-duration-hover) var(--gl-ease-in-out),
       color var(--gl-duration-hover) var(--gl-ease-in-out),
       border-color var(--gl-duration-hover) var(--gl-ease-in-out);
   }
@@ -394,9 +406,11 @@
      Grid crosshair. The + that marks a column intersection.
   ------------------------------------------------------------------ */
   .gl-crosshair {
-    width: 9px;
-    height: 9px;
-    background-size: 9px 1px, 1px 9px;
+    width: var(--gl-crosshair-size);
+    height: var(--gl-crosshair-size);
+    background-size:
+      var(--gl-crosshair-size) var(--gl-hairline),
+      var(--gl-hairline) var(--gl-crosshair-size);
     background-position: center, center;
     background-repeat: no-repeat;
   }
@@ -418,7 +432,8 @@
   .gl-reveal {
     opacity: 0;
     transform: translateY(var(--gl-reveal-distance));
-    transition: opacity var(--gl-duration-reveal) var(--gl-ease-out),
+    transition:
+      opacity var(--gl-duration-reveal) var(--gl-ease-out),
       transform var(--gl-duration-reveal) var(--gl-ease-out);
     transition-delay: var(--gl-reveal-delay, 0ms);
   }

@@ -81,6 +81,11 @@ const config: Config = {
         margin: "var(--gl-margin)",
         gutter: "var(--gl-gutter)",
         nav: "var(--gl-nav-height)",
+        crosshair: "var(--gl-crosshair-size)",
+        hairline: "var(--gl-hairline)",
+      },
+      backdropBlur: {
+        nav: "var(--gl-nav-blur)",
       },
       maxWidth: {
         shell: "var(--gl-max-width)",
