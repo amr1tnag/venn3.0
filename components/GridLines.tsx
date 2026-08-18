@@ -40,12 +40,9 @@ export default function GridLines({ tone = "ink", className }: GridLinesProps) {
             {/* Crosshair at the vertical midpoint of the section. */}
             {i !== 11 ? (
               <span
-                className="absolute right-0 top-1/2 block h-[9px] w-[9px] translate-x-1/2 -translate-y-1/2"
+                className="gl-crosshair absolute right-0 top-1/2 block translate-x-1/2 -translate-y-1/2"
                 style={{
                   backgroundImage: `linear-gradient(${cross}, ${cross}), linear-gradient(${cross}, ${cross})`,
-                  backgroundSize: "9px 1px, 1px 9px",
-                  backgroundPosition: "center, center",
-                  backgroundRepeat: "no-repeat",
                 }}
               />
             ) : null}

@@ -1,6 +1,10 @@
+import Cta from "@/components/Cta";
+import EventFormats from "@/components/EventFormats";
 import Hero from "@/components/Hero";
+import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
 import Problem from "@/components/Problem";
+import Steps from "@/components/Steps";
 
 export default function Page() {
   return (
@@ -9,9 +13,11 @@ export default function Page() {
       <main>
         <Hero />
         <Problem />
-        {/* Sections 3–6 land here: how it works, event formats,
-            WhatsApp CTA, footer. */}
+        <Steps />
+        <EventFormats />
+        <Cta />
       </main>
+      <Footer />
     </>
   );
 }

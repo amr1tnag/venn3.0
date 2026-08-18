@@ -7,12 +7,13 @@ import { site } from "@/lib/site";
  */
 export default function Nav() {
   return (
-    <header className="sticky top-0 z-50 border-b border-ink-16 bg-[color:var(--gl-paper)]/85 backdrop-blur-[6px]">
+    <header className="gl-nav sticky top-0 z-50 border-b border-ink-16">
       <nav
         aria-label="Primary"
         className="mx-auto flex h-nav max-w-shell items-center justify-between px-margin"
       >
-        <a href="#top" className="text-[19px] leading-none">
+        {/* py-2 lifts the hit area past the 24px minimum; the bar height is unchanged. */}
+        <a href="#top" className="inline-block py-2 text-lead leading-none">
           <Wordmark />
           <span className="sr-only">getlanded, back to top</span>
         </a>
