@@ -366,39 +366,6 @@
     letter-spacing: 0;
   }
 
-  /* ------------------------------------------------------------------ 06
-     Footer lockup. The one oversized decorative wordmark per page.
-
-     Sized against the measure on the same principle as the display role.
-     The coefficient comes from the RENDERED lockup, not from the string:
-     the ® sets at 0.42em, so "getlanded®" occupies 483px per 100px of
-     font-size rather than the 525px a full-size mark would. 0.203 lands
-     that at ~98% of the measure while the coefficient governs.
-
-     Re-measure the lockup before touching this number. 0.217 was derived
-     from a 451px reading, which is 7% narrower than the mark actually
-     sets; every width below the ceiling rendered ~105% of the measure and
-     pushed the ® past the right margin — on a phone it sat hard against
-     the trim with no margin at all.
-
-     The ceiling is a guard rail, not a design constraint: --gl-measure
-     tops out at 1280px (--gl-max-width less two margins), and 0.203 of
-     that is 260px, so the coefficient governs at every real width and
-     the mark spans the measure on a phone and a 27" display alike.
-     16.25rem is simply where that lands; raise it in step if
-     --gl-max-width ever grows, or the lockup starts falling short.
-
-     It does run larger than the display role, which is the point — this
-     is the page's one oversized ornament, not a headline. Capping it to
-     the type ceiling instead left it filling barely half the footer,
-     which read as a mistake rather than as a sign-off.
-  ------------------------------------------------------------------ */
-  .gl-wordmark-xl {
-    font-size: clamp(3rem, calc(var(--gl-measure) * 0.203), 16.25rem);
-    line-height: var(--gl-leading-display);
-    display: block;
-  }
-
   /* ------------------------------------------------------------------ 07
      Buttons. Sentence case, 2px radius, colour shift only on press.
   ------------------------------------------------------------------ */

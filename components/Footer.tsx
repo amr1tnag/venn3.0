@@ -2,13 +2,12 @@ import Wordmark from "./Wordmark";
 import { site } from "@/lib/site";
 
 /**
- * 06 — Footer lockup. The meta row sits under a hairline, and the oversized
- * wordmark closes the page.
+ * 06 — Footer lockup. The meta row sits under a hairline, and the wordmark
+ * closes the page.
  *
- * That mark is the system's one signature gesture: 06 allots exactly one
- * oversized decorative ® per page, and without it here the page never spends
- * it. The lockup is sized to the measure rather than to a step on the type
- * scale, the way a colophon is set.
+ * The mark is set at the same step as the nav lockup, so the two bookend the
+ * page at one size. 06 allots an oversized decorative ® per page; this page
+ * does not spend it, which keeps the display type the largest thing on it.
  */
 export default function Footer() {
   return (
@@ -32,9 +31,13 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* The oversized mark. Decorative — the nav lockup already names the
-            brand for assistive tech, so this one is hidden from it. */}
-        <Wordmark aria-hidden="true" className="gl-wordmark-xl mt-10" />
+        {/* Decorative — the nav lockup already names the brand for assistive
+            tech, so this one is hidden from it. text-lead/leading-none is the
+            nav lockup's own sizing; the two marks stay in step. */}
+        <Wordmark
+          aria-hidden="true"
+          className="mt-10 inline-block text-lead leading-none"
+        />
       </div>
     </footer>
   );
