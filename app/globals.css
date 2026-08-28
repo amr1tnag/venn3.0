@@ -57,8 +57,9 @@
        Sized against the CONTENT BOX, not the viewport. A plain vw term drifts
        away from the measure every time --gl-margin steps up, which is what
        left display lines filling barely half their column on wide screens.
-       Subtracting the margins keeps the fill constant across every
-       breakpoint instead.
+       --gl-measure keeps the fill constant across every breakpoint
+       instead, and stops tracking the viewport once the shell stops
+       widening.
 
        The 0.137 coefficient is the type doing its job: the longest
        hand-broken display line renders at 697px per 100px of font-size, so
@@ -77,10 +78,23 @@
        This still exceeds the PDF's D1 of 120px. 120px honours the spec's
        number and breaks its intent, which is oversized type as the primary
        design element. */
+    /* The measure every oversized role is sized against: the shell's inner
+       width, not the viewport. The shell caps at --gl-max-width, so past
+       that breakpoint the content box stops growing while 100vw keeps
+       going — min() freezes the term with the box it is standing in for. */
+    --gl-measure: calc(
+      min(100vw, var(--gl-max-width)) - 2 * var(--gl-margin)
+    );
+
+    /* Where display growth stops. The footer lockup (06) deliberately
+       runs past this: it is decorative and spans the measure. Every
+       role that is TYPE rather than ornament stops here. */
+    --gl-size-display-max: 9rem;
+
     --gl-size-display: clamp(
       2.4375rem,
-      calc((100vw - 2 * var(--gl-margin)) * 0.137),
-      9rem
+      calc(var(--gl-measure) * 0.137),
+      var(--gl-size-display-max)
     ); /* 39 → 144 */
     --gl-leading-display: 0.86;
     --gl-tracking-display: -0.04em;
@@ -355,21 +369,32 @@
   /* ------------------------------------------------------------------ 06
      Footer lockup. The one oversized decorative wordmark per page.
 
-     Sized against the content box on the same principle as the display
-     role. The coefficient is measured from the RENDERED lockup, not from
-     the string: the ® sets at 0.42em, so "getlanded®" occupies 451px per
-     100px of font-size rather than the 525px a full-size mark would. That
-     difference is why 0.186 left the lockup short of the measure; 0.217
-     lands it at ~98% while the coefficient governs.
+     Sized against the measure on the same principle as the display role.
+     The coefficient comes from the RENDERED lockup, not from the string:
+     the ® sets at 0.42em, so "getlanded®" occupies 483px per 100px of
+     font-size rather than the 525px a full-size mark would. 0.203 lands
+     that at ~98% of the measure while the coefficient governs.
 
-     The ceiling keeps the hierarchy honest. Uncapped, the mark reached
-     278px against a 144px display size — decorative ornament set larger
-     than every headline on the page, which inverts what the page is
-     saying. 11rem keeps it the biggest thing in the footer without
-     outshouting the type it closes.
+     Re-measure the lockup before touching this number. 0.217 was derived
+     from a 451px reading, which is 7% narrower than the mark actually
+     sets; every width below the ceiling rendered ~105% of the measure and
+     pushed the ® past the right margin — on a phone it sat hard against
+     the trim with no margin at all.
+
+     The ceiling is a guard rail, not a design constraint: --gl-measure
+     tops out at 1280px (--gl-max-width less two margins), and 0.203 of
+     that is 260px, so the coefficient governs at every real width and
+     the mark spans the measure on a phone and a 27" display alike.
+     16.25rem is simply where that lands; raise it in step if
+     --gl-max-width ever grows, or the lockup starts falling short.
+
+     It does run larger than the display role, which is the point — this
+     is the page's one oversized ornament, not a headline. Capping it to
+     the type ceiling instead left it filling barely half the footer,
+     which read as a mistake rather than as a sign-off.
   ------------------------------------------------------------------ */
   .gl-wordmark-xl {
-    font-size: clamp(3rem, calc((100vw - 2 * var(--gl-margin)) * 0.217), 11rem);
+    font-size: clamp(3rem, calc(var(--gl-measure) * 0.203), 16.25rem);
     line-height: var(--gl-leading-display);
     display: block;
   }
