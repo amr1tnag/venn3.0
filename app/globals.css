@@ -466,10 +466,14 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* No filter. The plate arrives graded to 05 like the event frames, and
-       stacking contrast(1.18) on an already-graded source crushes the ridge
-       line into the sky. Apply `filter: grayscale(1) contrast(1.18)` here
-       only if a colour original is ever dropped in. */
+    /* 05 — the plate is the one colour original in the system, so it takes
+       the grade here rather than arriving with it baked in like the event
+       frames. grayscale + contrast is the documented treatment; brightness
+       is the addition this frame needs. Shot at midday against a bright sky,
+       it converts to a light grey the chalk type cannot sit on, and darkening
+       the source is honest where thickening the scrim would just fog the
+       ridge line. Tune this pair, not the scrim, if the plate is replaced. */
+    filter: grayscale(1) contrast(1.12) brightness(0.58);
   }
 
   /* A ramp, not a wash. The type sits on the lower third; a flat overlay
@@ -482,10 +486,10 @@
     z-index: 1;
     background: linear-gradient(
       to bottom,
-      color-mix(in srgb, var(--gl-ink) 38%, transparent) 0%,
-      color-mix(in srgb, var(--gl-ink) 8%, transparent) 24%,
-      color-mix(in srgb, var(--gl-ink) 26%, transparent) 52%,
-      color-mix(in srgb, var(--gl-ink) 78%, transparent) 100%
+      color-mix(in srgb, var(--gl-ink) 45%, transparent) 0%,
+      color-mix(in srgb, var(--gl-ink) 10%, transparent) 26%,
+      color-mix(in srgb, var(--gl-ink) 28%, transparent) 54%,
+      color-mix(in srgb, var(--gl-ink) 82%, transparent) 100%
     );
   }
 

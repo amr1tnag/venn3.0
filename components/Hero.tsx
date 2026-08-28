@@ -5,7 +5,7 @@ import GridLines from "./GridLines";
 import Reveal from "./Reveal";
 import { site } from "@/lib/site";
 
-/** The full-bleed plate (04). Graded to 05 before it lands here. */
+/** The full-bleed plate (04). A colour original — 05 grades it in CSS. */
 const PLATE = "/hero/trek.jpg";
 
 /**
@@ -26,10 +26,10 @@ const hasPlate = fs.existsSync(path.join(process.cwd(), "public", PLATE));
  * line closes it as a second mono row rather than the card it used to get —
  * on a full-bleed ground a boxed panel fights the surface.
  *
- * The photographic plate slots in here: add the image as .gl-hero-plate with
- * .gl-hero-scrim over it (both are defined in 04), and move the grain from
- * --gl-grain-ink to --gl-grain-photo by swapping gl-grain--ink for
- * gl-grain--photo. Nothing else in this file moves.
+ * Two grounds, picked at build. With the plate present the photograph carries
+ * the section and the grain runs at the photo opacity on its own layer; with
+ * it absent the section falls back to flat ink and takes the standard ink
+ * grain. The type, the grid and the composition are the same either way.
  */
 export default function Hero() {
   const { activity, neighbourhood, day, time, pairs, spotsLeft } =
