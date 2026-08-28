@@ -1,7 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import GridLines from "./GridLines";
 import Reveal from "./Reveal";
 import { site } from "@/lib/site";
 
@@ -21,15 +20,20 @@ const hasPlate = fs.existsSync(path.join(process.cwd(), "public", PLATE));
  * (07 switches the bar to chalk while it is over this section), so the page
  * opens on one uninterrupted ground.
  *
- * Composition follows the full-bleed plate (04). A mono row rides the top
- * rule, the display block sits on the baseline of the frame, and the event
+ * Composition follows the full-bleed plate (04). A mono row sits under the
+ * bar, the display block sits on the baseline of the frame, and the event
  * line closes it as a second mono row rather than the card it used to get —
  * on a full-bleed ground a boxed panel fights the surface.
  *
  * Two grounds, picked at build. With the plate present the photograph carries
  * the section and the grain runs at the photo opacity on its own layer; with
- * it absent the section falls back to flat ink and takes the standard ink
- * grain. The type, the grid and the composition are the same either way.
+ * it absent the section falls back to flat ink. The type and the composition
+ * are the same either way.
+ *
+ * 03 — no grid lines here. The plate is what frames this block, and a grid
+ * over a photograph is texture on texture. The field moves to 02, which is
+ * the emptiness the grid exists to frame. The closing hairline stays: with
+ * the grid gone it is the only rule in the block, so the two never meet.
  */
 export default function Hero() {
   const { activity, neighbourhood, day, time, pairs, spotsLeft } =
@@ -58,11 +62,11 @@ export default function Hero() {
         </>
       ) : null}
 
-      <GridLines tone="chalk" crossAt="92%" />
-
-      {/* Mono meta, on the top rule. 03 — the eyebrow rides it. */}
-      <div className="gl-shell relative z-[3] w-full pt-10">
-        <div className="flex items-baseline justify-between gap-6 border-t border-chalk-20 pt-4">
+      {/* Mono meta. No rule over it: the bar's own bottom edge already
+          divides this from the nav, and a second line 40px under the first
+          read as a double rule. The row sits straight under the bar. */}
+      <div className="gl-shell relative z-[3] w-full pt-6">
+        <div className="flex items-baseline justify-between gap-6">
           <p className="gl-meta text-chalk-45">
             Mumbai <span className="hidden sm:inline">/ Weekends </span>/ Pairs
             first
