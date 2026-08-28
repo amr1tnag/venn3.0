@@ -19,13 +19,15 @@ export default function Problem() {
     >
       <div className="gl-shell">
         <Reveal>
-          <h2
-            id="problem-heading"
-            className="gl-headline max-w-[44ch] text-balance"
-          >
-            You moved here in March. You know your flatmate, four people at
-            work, and the man who makes your chai. Saturday comes around and the
-            list runs out.
+          {/* Hand-broken, not balanced. text-balance evened the three lines to
+              within 16px of each other, which reads as a justified block; the
+              tension in this direction comes from a long line against a short
+              one. The opening line is measured to hit the trim. */}
+          <h2 id="problem-heading" className="gl-display">
+            <span className="block">You moved here</span>
+            <span className="block">in March.</span>
+            <span className="block">You still eat</span>
+            <span className="block">dinner alone.</span>
           </h2>
         </Reveal>
       </div>

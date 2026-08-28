@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState, type ElementType, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ElementType,
+  type ReactNode,
+} from "react";
 
 /**
  * 08 — Motion. translateY(16px) → 0 with a fade, 620ms, staggered 60ms per
@@ -55,7 +61,11 @@ export default function Reveal({
       ref={ref}
       className={className ? `gl-reveal ${className}` : "gl-reveal"}
       data-revealed={revealed ? "true" : "false"}
-      style={{ "--gl-reveal-delay": `calc(${index} * var(--gl-stagger))` } as React.CSSProperties}
+      style={
+        {
+          "--gl-reveal-delay": `calc(${index} * var(--gl-stagger))`,
+        } as React.CSSProperties
+      }
     >
       {children}
     </Tag>

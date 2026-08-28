@@ -14,20 +14,20 @@ const STEPS = [
   {
     n: "01",
     when: "Sunday",
-    title: "Tell us about yourself",
-    copy: "Eleven questions, two minutes. Where you moved from, what you do on a free evening, how loud you like a room.",
+    title: "You answer eleven questions",
+    copy: "Where you moved from, what you do on a free evening, how loud you like a room.",
   },
   {
     n: "02",
     when: "Tuesday",
-    title: "We match you with one person",
-    copy: "One match, not a feed. They also landed in Mumbai this year, and you get their name before you get the address.",
+    title: "We pair you with one person",
+    copy: "One match, not a feed. They also landed in Mumbai this year.",
   },
   {
     n: "03",
     when: "Saturday",
     title: "You both walk into the same room",
-    copy: "Fifteen pairs, one host, one activity. Thirty people who all turned up for the same reason. You never arrive alone.",
+    copy: "Fifteen pairs, one host, one activity. You never arrive alone.",
   },
 ];
 
