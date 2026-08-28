@@ -265,6 +265,16 @@
     backdrop-filter: blur(var(--gl-nav-blur));
   }
 
+  /* Over the hero plate (04) the bar has no surface of its own — the
+     photograph runs behind it. No blur either: blurring the plate under the
+     bar reads as a smudge across the ridge line rather than as glass. The
+     type is set in chalk by the component, so only the ground is handled
+     here. */
+  .gl-nav--over {
+    background-color: transparent;
+    color: var(--gl-paper);
+  }
+
   /* ------------------------------------------------------------------ 04
      GRAIN. An ::after overlay on the surface, overlay blend, no pointer
      events. Sits under the type — never over it — because the type layer
@@ -433,6 +443,62 @@
     background-color: var(--gl-signal);
     color: var(--gl-ink);
     border-radius: var(--gl-radius);
+  }
+
+  /* ------------------------------------------------------------------ 04
+     Hero plate. The one full-bleed photograph on the page. It runs edge to
+     edge and passes behind the nav, so the opening view is the image rather
+     than paper.
+
+     Four layers, bottom up: the plate (0), the scrim that buys the type its
+     contrast (1), the grain and the grid (2), the type (3). The section sets
+     `isolate`, so the stack stays local to it.
+
+     .gl-grain is deliberately not used here. Its `> *` rule lifts every
+     direct child above the grain, which is right for a grained SURFACE and
+     wrong for a grained PHOTOGRAPH — it would put the plate over its own
+     grain. The plate gets its own layer instead, at the photo opacity.
+  ------------------------------------------------------------------ */
+  .gl-hero-plate {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* No filter. The plate arrives graded to 05 like the event frames, and
+       stacking contrast(1.18) on an already-graded source crushes the ridge
+       line into the sky. Apply `filter: grayscale(1) contrast(1.18)` here
+       only if a colour original is ever dropped in. */
+  }
+
+  /* A ramp, not a wash. The type sits on the lower third; a flat overlay
+     dark enough to carry it there would also flatten the ridge line at the
+     top, which is the reason the photograph is on the page. The short lift
+     at 0% is for the nav, which sets its type in chalk over the sky. */
+  .gl-hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--gl-ink) 38%, transparent) 0%,
+      color-mix(in srgb, var(--gl-ink) 8%, transparent) 24%,
+      color-mix(in srgb, var(--gl-ink) 26%, transparent) 52%,
+      color-mix(in srgb, var(--gl-ink) 78%, transparent) 100%
+    );
+  }
+
+  .gl-hero-grain {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background-image: url("/grain.svg");
+    background-size: var(--gl-grain-tile-photo) var(--gl-grain-tile-photo);
+    background-repeat: repeat;
+    mix-blend-mode: overlay;
+    opacity: var(--gl-grain-photo);
   }
 
   /* ------------------------------------------------------------------ 05

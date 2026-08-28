@@ -1,36 +1,78 @@
+import fs from "node:fs";
+import path from "node:path";
+
 import GridLines from "./GridLines";
 import Reveal from "./Reveal";
 import { site } from "@/lib/site";
 
+/** The full-bleed plate (04). Graded to 05 before it lands here. */
+const PLATE = "/hero/trek.jpg";
+
 /**
- * 07 — Hero. Display 120px, grid lines visible, reveal on entry.
+ * Resolved once, at build. A missing plate falls back to the flat ink ground
+ * rather than a broken image, so the hero is never half-rendered — drop the
+ * file in and the photograph takes over on the next build.
+ */
+const hasPlate = fs.existsSync(path.join(process.cwd(), "public", PLATE));
+
+/**
+ * 07 — Hero. Inverted: the opening view is ink, not paper, and the type sets
+ * in chalk over it. The surface runs edge to edge and passes behind the nav
+ * (07 switches the bar to chalk while it is over this section), so the page
+ * opens on one uninterrupted ground.
  *
- * The display lines are broken by hand and each is its own reveal step at
- * 60ms stagger. A wrapped 120px headline is a bug, so the clamp bottoms out
- * at 52px — at 375px "Bombay is loud." sets on one line with room to spare.
+ * Composition follows the full-bleed plate (04). A mono row rides the top
+ * rule, the display block sits on the baseline of the frame, and the event
+ * line closes it as a second mono row rather than the card it used to get —
+ * on a full-bleed ground a boxed panel fights the surface.
+ *
+ * The photographic plate slots in here: add the image as .gl-hero-plate with
+ * .gl-hero-scrim over it (both are defined in 04), and move the grain from
+ * --gl-grain-ink to --gl-grain-photo by swapping gl-grain--ink for
+ * gl-grain--photo. Nothing else in this file moves.
  */
 export default function Hero() {
-  const { activity, neighbourhood, day, pairs, people, spotsLeft } =
+  const { activity, neighbourhood, day, time, pairs, spotsLeft } =
     site.nextEvent;
 
   return (
     <section
       id="top"
-      className="gl-grain relative flex min-h-[calc(100svh-var(--gl-nav-height))] flex-col justify-end overflow-hidden pb-tight pt-10"
+      className={`gl-ink-surface relative isolate -mt-nav flex min-h-svh flex-col justify-between overflow-hidden pb-tight pt-nav ${
+        hasPlate ? "" : "gl-grain gl-grain--ink"
+      }`}
     >
-      <GridLines tone="ink" crossAt="96%" />
+      {hasPlate ? (
+        <>
+          {/* The LCP element — a lazy hero is a blank first paint. */}
+          <img
+            src={PLATE}
+            alt=""
+            aria-hidden="true"
+            fetchPriority="high"
+            decoding="async"
+            className="gl-hero-plate"
+          />
+          <div aria-hidden="true" className="gl-hero-scrim" />
+          <div aria-hidden="true" className="gl-hero-grain" />
+        </>
+      ) : null}
 
-      <div className="gl-shell relative z-[3] w-full">
-        {/* Mono meta, in the margin. 03 — the eyebrow rides the top rule. */}
-        <div className="mb-8 flex items-baseline justify-between gap-6 border-t border-ink-16 pt-4 md:mb-10">
-          <p className="gl-meta text-ink-40">
+      <GridLines tone="chalk" crossAt="92%" />
+
+      {/* Mono meta, on the top rule. 03 — the eyebrow rides it. */}
+      <div className="gl-shell relative z-[3] w-full pt-10">
+        <div className="flex items-baseline justify-between gap-6 border-t border-chalk-20 pt-4">
+          <p className="gl-meta text-chalk-45">
             Mumbai <span className="hidden sm:inline">/ Weekends </span>/ Pairs
             first
           </p>
-          <p className="gl-meta shrink-0 text-ink-40">©2026</p>
+          <p className="gl-meta shrink-0 text-chalk-45">&copy;2026</p>
         </div>
+      </div>
 
-        <h1 className="gl-display">
+      <div className="gl-shell relative z-[3] w-full">
+        <h1 className="gl-display text-paper">
           {/* Hand-broken lines. Each reveals on its own beat. */}
           <Reveal as="span" index={0} className="block">
             Bombay is loud.
@@ -43,39 +85,30 @@ export default function Hero() {
           </Reveal>
         </h1>
 
-        <div className="mt-10 grid gap-10 md:mt-12 md:grid-cols-12 md:gap-gutter">
-          <div className="md:col-span-5">
-            <p className="gl-lead max-w-[34ch] text-ink-80">
-              We pair you with one other person who also just landed, then put{" "}
-              {pairs} pairs in the same room on Saturday.
-            </p>
+        <div className="mt-8 max-w-[34ch] md:mt-10">
+          <p className="gl-lead text-chalk-70">
+            We pair you with one other person who also just landed, then put{" "}
+            {pairs} pairs in the same room on Saturday.
+          </p>
 
-            <a
-              href={site.whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="gl-button mt-8 w-full sm:w-auto"
-            >
-              Get paired
-              <span aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
+          <a
+            href={site.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="gl-button gl-button--invert mt-8 w-full sm:w-auto"
+          >
+            Get paired
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
 
-          {/* This weekend. Sits in the right-hand columns against the grid,
-              divided by a hairline rather than a box. */}
-          <div className="md:col-span-4 md:col-start-8">
-            <div className="border-t border-ink-16 pt-4">
-              <div className="mb-3 flex items-center justify-between gap-4">
-                <p className="gl-meta text-ink-40">This Saturday</p>
-                {/* 02 — the accent budget for this viewport, spent once. */}
-                <p className="gl-badge gl-meta">{spotsLeft} spots left</p>
-              </div>
-              <p className="text-body text-ink-80">
-                {activity} in {neighbourhood}. {pairs} pairs, {people} people,
-                one host. {day}.
-              </p>
-            </div>
-          </div>
+        {/* The tail. This weekend's room, set as a mono line. */}
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-chalk-20 pt-4 md:mt-12">
+          <p className="gl-meta text-chalk-45">
+            {activity} &mdash; {neighbourhood} &mdash; {day} {time}
+          </p>
+          {/* 02 — the accent budget for this viewport, spent once. */}
+          <p className="gl-badge gl-meta shrink-0">{spotsLeft} spots left</p>
         </div>
       </div>
     </section>
